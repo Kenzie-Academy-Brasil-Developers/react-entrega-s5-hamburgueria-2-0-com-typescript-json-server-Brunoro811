@@ -25,6 +25,9 @@ h6,form,p {
     --negative :    #E60000;
     --warning:      #FFCD07;
     --information:  #155BCB;
+    --colorText :   #ffffff;
+    --background: #ffffff;
+    --background-secundary: #f2f2f2f2;
 
     --gray-600: #333333;
     --gray-300: #828282;

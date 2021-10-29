@@ -23,13 +23,18 @@ interface UsersData {
 }
 
 const UsersContext = createContext<UsersData>({} as UsersData);
-
 export const UsersProvider = ({ children }: UsersProps) => {
   const history = useHistory();
   const [authToken, setAuthToken] = useState(
     () => localStorage.getItem("@kenzie_burguer") || ""
   );
   const baseURL = "http://localhost:3001";
+  const Authorization = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${authToken}`,
+    },
+  };
 
   const singIn = (userData: SingInData) => {
     axios
@@ -38,7 +43,9 @@ export const UsersProvider = ({ children }: UsersProps) => {
         localStorage.setItem("@kenzie_burguer", response.data.accessToken);
         setAuthToken(response.data.token);
         toast.success("Parabéns você está na Kenzie Burguer!");
-        history.push("/dashboard");
+        setTimeout(function () {
+          history.push("/dashboard");
+        }, 4000);
       })
       .catch((err) => {
         toast.error(err.response.data);
@@ -50,7 +57,6 @@ export const UsersProvider = ({ children }: UsersProps) => {
       .post(`${baseURL}${"/users"}`, newUserData)
       .then((response) => {
         toast.success("Parabéns você esta cadastrado!");
-        console.log(response.data);
         history.push("/");
       })
       .catch((err) => {

@@ -43,10 +43,6 @@ function FormRegister() {
   const { registerNewUser } = useUsers();
 
   const handleRegister = () => {
-    console.log(email);
-    console.log(password);
-    console.log(name);
-    console.log(passwordTwo);
     registerNewUser({ name, email, password });
   };
 

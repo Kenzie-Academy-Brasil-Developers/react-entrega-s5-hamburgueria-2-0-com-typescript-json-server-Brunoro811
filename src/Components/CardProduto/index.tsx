@@ -1,35 +1,42 @@
 import { Container, Image, Title, Paragraph, Price } from "./style";
-import foto from "../../Assets/sanduiche.png";
 import Button from "../Button";
+
 interface CardProdutoProps {
   img: string;
-  title: string;
-  paragraph: string;
+  name: string;
+  category: string;
   price: number;
+  callback: () => void | undefined;
 }
 function CardProduto({
-  img = "../../Assets/sanduiche.png",
-  title = "title",
-  paragraph = "paragraph",
+  img = "",
+  name = "title",
+  category = "category",
   price = 0,
+  callback,
 }: CardProdutoProps) {
   return (
     <Container>
       <Image>
-        <img src={foto} alt="" />
+        <img src={img} alt={img} />
       </Image>
       <ul>
         <li>
-          <Title>{title}</Title>
+          <Title>{name}</Title>
         </li>
         <li>
-          <Paragraph>{paragraph}</Paragraph>
+          <Paragraph>{category}</Paragraph>
         </li>
         <li>
           <Price>R$ {price} </Price>
         </li>
         <li className="LiButton">
-          <Button primary value={"Adicionar"} />
+          <Button
+            callback={callback}
+            param={{ img, name, category, price }}
+            primary
+            value={"Adicionar"}
+          />
         </li>
       </ul>
     </Container>

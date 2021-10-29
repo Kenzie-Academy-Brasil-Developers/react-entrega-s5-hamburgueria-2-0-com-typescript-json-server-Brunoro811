@@ -1,8 +1,8 @@
 import { ButtonComponent } from "./style";
 interface ButtonProps {
   value: string;
-  callback?: (param: string | undefined) => void | undefined;
-  param?: string | undefined;
+  callback?: (param: object | undefined) => void | undefined;
+  param?: object | undefined;
   primary?: boolean | undefined;
   type?: string | boolean;
   disabled?: boolean | undefined;
