@@ -11,7 +11,6 @@ import {useProduct} from "../../Providers/Products"
 import {useUsers} from "../../Providers/Users"
 
 
-import { useHistory } from "react-router"
 import { useState } from "react"
 import Input from "../../Components/Input"
 import *  as yup from 'yup'
@@ -19,11 +18,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
 function CheckoutOrder (){
-    const history = useHistory()
-    const {cartProducts} = useProduct();
+
+    const {cartProducts,clearCart} = useProduct();
     const [street,setStreet] = useState("");
     const [number , setNumber] = useState();
     const [pay,setPay] = useState("");
+    const token = localStorage.getItem("@kenzie_burguer")
 
     const {logout,registerNewOrder} = useUsers()
 
@@ -39,7 +39,8 @@ function CheckoutOrder (){
       } = useForm({ resolver: yupResolver(schema) });
       
       const handleRegisterSale = () =>{
-        registerNewOrder({street,number,pay,products: cartProducts})
+        registerNewOrder({street,number,pay,products:cartProducts},token)
+        clearCart();
       }
     
     return(

@@ -26,15 +26,15 @@ function CardOrder({ objeto, orderProducts }: CardOrderProps) {
           <strong>Forma de Pagamento: </strong>
           {objeto.pay}
         </p>
-        <p>
+        <div>
           <strong>Produtos: </strong>
           {orderProducts[0] &&
             orderProducts.map((element, index) => (
-              <p>
+              <p key={index}>
                 <strong>{element.quantity} x </strong> {element.name}
               </p>
             ))}
-        </p>
+        </div>
       </Main>
     </Container>
   );

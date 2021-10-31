@@ -6,7 +6,7 @@ import Button from "../../Components/Button"
 import {Images} from "../../Components/Images"
 
 
-import search from "../../Assets/search.png"
+
 import logoutImg from "../../Assets/logout.png"
 import cart from "../../Assets/cart.png"
 import x from "../../Assets/X.png"

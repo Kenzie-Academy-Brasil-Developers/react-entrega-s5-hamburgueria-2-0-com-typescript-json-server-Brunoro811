@@ -1,8 +1,6 @@
-import {Container,Header,Logo,Seting,Main,ContainerBlack,Modal,HeaderModal,MainModal,Row,RowTotal} from "./menu.ts" 
+import {Container,Header,Logo,Seting,Main,ContainerBlack,Modal,HeaderModal,MainModal,Row} from "./menu.ts" 
 import ButtonIcon from "../Components/ButtonIcon"
-import ButtonCart from "../Components/ButtonCart"
 import CardProduto from "../Components/CardProduto"
-import CartCardProduto from "../Components/CartCardProduto"
 import Button from "../Components/Button"
 import {Images} from "../Components/Images"
 
@@ -11,16 +9,18 @@ import search from "../Assets/search.png"
 import x from "../Assets/X.png"
 
 import {useProduct} from "../Providers/Products"
+import {useUsers} from "../Providers/Users"
 
 
-import { useHistory } from "react-router"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 function Menu (){
-    const history = useHistory()
+
     const {products,loadProduts} = useProduct();
+    const {NoticesLocalStorage} = useUsers() ;
     const [enable,setEnable] = useState(false);
+    const [isNotice,setIsNotice] = useState(localStorage.getItem("@Notices_kenzie_burguer"));
 
     useEffect(()=>{
         loadProduts();
@@ -30,8 +30,10 @@ function Menu (){
     const EnableDisable = () =>{
         setEnable(!enable)
     }
-    const handleCheckoutOrder = () =>{
-        history.push("/checkoutOrder")
+    const Notice = () =>{
+       setIsNotice(!isNotice);
+       NoticesLocalStorage()
+
     }
     return(
         <>
@@ -68,6 +70,24 @@ function Menu (){
                     <Row isBorderBottom>
                        Faça Login para adicionar produtos ao carrinho!
                     </Row>
+                    </MainModal>
+                </Modal>
+            </ContainerBlack>
+            }
+             {!isNotice &&
+            <ContainerBlack>
+                <Modal className="slideIn">
+                    <HeaderModal>
+                        <p>
+                        Atenção!
+                        </p>
+                        <ButtonIcon callback={Notice}  icon={x} />
+                    </HeaderModal>
+                    <MainModal>
+                    <Row isBorderBottom>
+                       O App Kenzie Burguer usa uma FAKE API por isso dado um determinado tempo os dados são apagamos totalmente. Caso isso conteça os produtos seram cadastrados automaticamente (dê o reload na pagina de Cardápio) mas seu usuário será perdido e sentimos muito por isso.<br/> Por favor cadastre-se novamente! Agradecemos a compreenção.
+                    </Row>
+                    <Button primary callback={Notice} value={"Obrigado por me avisar!"} />
                     </MainModal>
                 </Modal>
             </ContainerBlack>

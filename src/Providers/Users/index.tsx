@@ -33,10 +33,11 @@ interface UsersData {
   singIn: (userData: SingInData) => void;
   getOrders: () => void;
   registerNewUser: (userData: RegisterData) => void;
-  registerNewOrder: (newOrder: RegisterOrder) => void;
+  registerNewOrder: (newOrder: RegisterOrder, token: string) => void;
   logout: () => void;
   authToken: string;
   orders: object;
+  NoticesLocalStorage: () => void;
 }
 
 const UsersContext = createContext<UsersData>({} as UsersData);
@@ -44,14 +45,19 @@ export const UsersProvider = ({ children }: UsersProps) => {
   const history = useHistory();
   const [orders, setOrders] = useState<UsersData[]>([]);
   const [authToken, setAuthToken] = useState(
-    () => localStorage.getItem("@kenzie_burguer") || ""
+    localStorage.getItem("@kenzie_burguer") || ""
   );
   const Authorization = {
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${localStorage.getItem("@kenzie_burguer")}`,
     },
   };
+
+  const NoticesLocalStorage = () => {
+    localStorage.setItem("@Notices_kenzie_burguer", "true");
+  };
+
   const singIn = (userData: SingInData) => {
     axios
       .post(`${baseURL}${"/login"}`, userData)
@@ -87,9 +93,9 @@ export const UsersProvider = ({ children }: UsersProps) => {
       })
       .catch((err) => toast.error(err.response));
   };
-  const registerNewOrder = (newOrder: RegisterOrder) => {
-    console.log(authToken);
-    const { sub }: string = jwtDecode(authToken);
+  const registerNewOrder = (newOrder: RegisterOrder, token: string) => {
+    setAuthToken(() => localStorage.getItem("@kenzie_burguer") || "");
+    const { sub }: string = jwtDecode(`${token}`);
     const id = Number(sub);
     const body = {
       userId: id,
@@ -124,6 +130,7 @@ export const UsersProvider = ({ children }: UsersProps) => {
         registerNewOrder,
         getOrders,
         orders,
+        NoticesLocalStorage,
       }}
     >
       {children}

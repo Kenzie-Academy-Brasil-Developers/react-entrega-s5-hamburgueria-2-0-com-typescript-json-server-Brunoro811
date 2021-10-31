@@ -43,16 +43,14 @@ interface ProductData {
 
 const ProductContext = createContext<ProductData>({} as ProductData);
 export const ProductProvider = ({ children }: UsersProps) => {
-  const [authToken] = useState(
-    () => localStorage.getItem("@kenzie_burguer") || ""
-  );
+  const [authToken] = useState(localStorage.getItem("@kenzie_burguer") || "");
   const [products, setProducts] = useState<ProductData[]>([]);
   const [cartProducts, setCartproducts] = useState<NewProductProps[]>([]);
   const [total, setTotal] = useState(0);
   const Authorization = {
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${localStorage.getItem("@kenzie_burguer")}`,
     },
   };
   const countTotal = () => {
@@ -88,13 +86,15 @@ export const ProductProvider = ({ children }: UsersProps) => {
   };
   const defaultPRoducts = () => {
     defaultProductsArray.map((element, index) => {
-      console.log(element);
-      axios
+      return axios
         .post(`${baseURL}/products`, element, Authorization)
         .then((response) => {
-          console.log(response.data);
+          ("");
         })
-        .catch((err) => console.log(err.response));
+        .catch((err) => {
+          toast.error(err.response);
+          toast.error("Por favor contate o suporte!");
+        });
     });
   };
   const clearCart = () => {
