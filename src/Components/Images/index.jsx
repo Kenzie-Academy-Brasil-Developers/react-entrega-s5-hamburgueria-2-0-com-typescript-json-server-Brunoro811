@@ -16,3 +16,15 @@ export {
     xBurguer,
     coca
 }
+
+
+export let Images = [];
+Images['hamburguer'] = hamburguer;
+Images['xBurguer'] = xBurguer;
+Images['comboKenzie'] = comboKenzie;
+Images['fantaGuarana'] = fantaGuarana;
+Images['bigKenzie'] = bigKenzie;
+Images['mcFlure'] = mcFlure;
+Images['comboKenzie'] = comboKenzie;
+Images['ovoMaltine'] = ovoMaltine;
+Images['coca'] = coca;

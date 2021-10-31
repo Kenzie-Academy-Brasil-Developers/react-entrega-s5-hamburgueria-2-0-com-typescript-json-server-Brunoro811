@@ -34,48 +34,26 @@ width: 100%;
 export const Seting = styled.div`
     max-width: 400px;
     display: flex;
-    a{
-        font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--gray-600);
-    line-height: 60px;
-    :hover{
-        text-decoration: underline;
-    }
-    }
 `
 export const Main = styled.div`
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 15px;
     margin-top: 20px;
     
 `
-
-export const ContainerBlack = styled.div`
-    background-color: rgba(0,0,0,0.4);
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-`
-export const Modal = styled.div`
+export const Cart = styled.div`
     width: 100%;
-    max-width: 400px;
+    max-width: 1000px;
     border-radius: 3px;
     padding: 0px 0px 20px 0px;
     margin: 0 auto;
-    margin-top: 150px;
     background-color: var(--background);
 `
-export const HeaderModal = styled.div`
+export const HeaderCart = styled.div`
     width: 100%;
     padding: 10px;
     line-height: 32px;
@@ -89,8 +67,7 @@ export const HeaderModal = styled.div`
         font-size: 1.1rem;
     }
 `
-export const MainModal = styled.div`
-    text-align: center;
+export const MainCart = styled.div`
     padding: 10px;
     line-height: 24px;
     display: flex;
@@ -106,6 +83,12 @@ export const Row =  styled.div<RowProps>`
     flex-direction: column;
     gap: 10px;
     ${(props)=>props.isBorderBottom ? "border-bottom: 2px solid #E0E0E0;padding-bottom:20px;" : ""}
+`
+export const ContainerRadioGroup =styled.div`
+    margin-top: 20px;
+    h3{
+        color: var(--gray-600)
+    }
 `
 export const RowTotal = styled.div`
   width: 100%;

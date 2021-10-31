@@ -5,21 +5,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
 import Input from "../Input";
-import { Container, Paragraph, Title } from "./style";
+import { Container, Title } from "./style";
 import Button from "../Button";
-import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { useUsers } from "../../Providers/Users";
 
-interface FormRegister {
-  handleRegister: () => void;
-  handlePushCadastrar: () => void;
-  email: string;
-  password: string;
-}
-
 function FormRegister() {
-  const history = useHistory();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

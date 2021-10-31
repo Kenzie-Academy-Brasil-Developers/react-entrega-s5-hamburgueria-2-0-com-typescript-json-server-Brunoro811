@@ -5,23 +5,32 @@ import lixeira from "../../Assets/lixeira.png";
 import { useState } from "react";
 import { useProduct } from "../../Providers/Products";
 
+import NewProductProps from "../../Providers/Products";
+
 interface productProps {
   img: string;
   name: string;
   index: number;
   quantity: number;
+  objeto: NewProductProps;
 }
 
-function CartCardProduto({ img, name, index, quantity }: productProps) {
-  const [number, setNumber] = useState(1);
-  const { cartProducts, setCartproducts, UpdateCart } = useProduct();
+function CartCardProduto({
+  objeto,
+  img = "",
+  index,
+  quantity = 1,
+}: productProps) {
+  const [number, setNumber] = useState(quantity);
+  const { cartProducts, setCartproducts, addCart, removedCart } = useProduct();
 
   const handleNumberMais = (name: string) => {
-    UpdateCart(name);
+    addCart(objeto);
     setNumber(number + 1);
   };
   const handleNumberMenos = () => {
     if (number > 1) {
+      removedCart(objeto);
       setNumber(number - 1);
     }
   };
@@ -35,14 +44,14 @@ function CartCardProduto({ img, name, index, quantity }: productProps) {
       <Row>
         <Col>
           <ColMini isBackground>
-            <img src={img} alt={img} />
+            <img src={objeto.img} alt={objeto.img} />
           </ColMini>
           <ColMini>
-            <h4>{name}</h4>
+            <h4>{objeto.name}</h4>
             <Count>
               <CountButton onClick={() => handleNumberMenos()}>-</CountButton>
               <p>{number}</p>
-              <CountButton onClick={() => handleNumberMais(name)}>
+              <CountButton onClick={() => handleNumberMais(objeto.name)}>
                 +
               </CountButton>
             </Count>

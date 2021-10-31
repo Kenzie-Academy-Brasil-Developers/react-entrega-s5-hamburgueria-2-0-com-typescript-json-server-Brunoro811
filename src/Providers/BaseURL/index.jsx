@@ -1,0 +1,1 @@
+export const baseURL = "https://api-type-kenzie-burguer-3.herokuapp.com";

@@ -28,7 +28,7 @@ function CardProduto({
           <Paragraph>{category}</Paragraph>
         </li>
         <li>
-          <Price>R$ {price} </Price>
+          <Price>R$ {price.toFixed(2).replace(".", ",")} </Price>
         </li>
         <li className="LiButton">
           <Button

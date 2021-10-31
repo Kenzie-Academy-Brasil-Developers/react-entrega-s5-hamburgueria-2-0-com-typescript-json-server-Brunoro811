@@ -1,6 +1,5 @@
 import { Button, Total } from "./style";
 import { useProduct } from "../../Providers/Products";
-import { useState } from "react";
 
 interface ButtonIconsProps {
   callback: (param?: string) => void;
@@ -15,7 +14,7 @@ function ButtonCart({ callback, param, icon }: ButtonIconsProps) {
     <>
       <Button onClick={() => callback(param)} icon={icon}>
         <Total>{cartProducts.length}</Total>
-        <img src={icon} alt="image" />
+        <img src={icon} alt={icon} />
       </Button>
     </>
   );

@@ -1,14 +1,20 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { baseURL } from "../BaseURL";
 
 import axios from "axios";
-import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 
 interface UsersProps {
   children: ReactNode;
 }
 
-interface NewProductProps {
+export default interface NewProductProps {
   category: string;
   description: string;
   id: number;
@@ -22,43 +28,60 @@ interface NewProductProps {
 }
 
 interface ProductData {
-  /*registerNewUser: (userData: RegisterData) => void;*/
   loadProduts: () => void;
   addCart: (newProduct: NewProductProps) => void;
+  removedCart: (newProduct: NewProductProps) => void;
   authToken: string;
   products: object;
   cartProducts: NewProductProps[];
-  setCartproducts: (param: NewProductProps[]) => void;
-  UpdateCart: (name: any) => void;
+  setCartproducts: (
+    param: NewProductProps[] | (() => NewProductProps[])
+  ) => void;
+  total: number;
+  clearCart: () => void;
 }
 
 const ProductContext = createContext<ProductData>({} as ProductData);
 export const ProductProvider = ({ children }: UsersProps) => {
-  const history = useHistory();
-  const [authToken, setAuthToken] = useState(
+  const [authToken] = useState(
     () => localStorage.getItem("@kenzie_burguer") || ""
   );
   const [products, setProducts] = useState<ProductData[]>([]);
   const [cartProducts, setCartproducts] = useState<NewProductProps[]>([]);
-  const baseURL = "http://localhost:3001";
-  const Authorization = {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${authToken}`,
-    },
+  const [total, setTotal] = useState(0);
+  const countTotal = () => {
+    setTotal(
+      cartProducts.reduce((acc, value) => acc + value.price * value.quantity, 0)
+    );
   };
-  const UpdateCart = (name: string) => {
-    cartProducts.map((element, index) => {
-      if (element.name === name) {
-        element.quantity++;
-      }
-    });
-    console.log(cartProducts);
+  const SearchProductCart = (newProduct: NewProductProps) => {
+    cartProducts.map((element, index) =>
+      element.name === newProduct.name ? element.quantity++ : ""
+    );
+    countTotal();
+    toast.success("Sucesso ao adicionado ao carrinho!");
+  };
+  const removedCart = (newProduct: NewProductProps) => {
+    cartProducts.map((element, index) =>
+      element.name === newProduct.name ? element.quantity-- : ""
+    );
+    countTotal();
+    toast.success("Sucesso ao remover do carrinho!");
   };
   const addCart = (newProduct: NewProductProps) => {
-    setCartproducts([...cartProducts, { ...newProduct, quantity: 1 }]);
-    toast.success("Adicionado ao carrinho!");
-    console.log(cartProducts);
+    const find = cartProducts.filter(
+      (element, index) => element.name === newProduct.name
+    );
+    if (find[0]) {
+      SearchProductCart(newProduct);
+    } else {
+      setCartproducts([...cartProducts, { ...newProduct, quantity: 1 }]);
+      countTotal();
+      toast.success("Sucesso ao adicionado ao carrinho!");
+    }
+  };
+  const clearCart = () => {
+    setCartproducts([]);
   };
   const loadProduts = () => {
     axios
@@ -70,7 +93,9 @@ export const ProductProvider = ({ children }: UsersProps) => {
         toast.error("Erro ao carregar produtos!");
       });
   };
-
+  useEffect(() => {
+    countTotal();
+  }, [cartProducts]);
   return (
     <ProductContext.Provider
       value={{
@@ -78,9 +103,11 @@ export const ProductProvider = ({ children }: UsersProps) => {
         loadProduts,
         products,
         addCart,
+        removedCart,
         cartProducts,
         setCartproducts,
-        UpdateCart,
+        total,
+        clearCart,
       }}
     >
       {children}

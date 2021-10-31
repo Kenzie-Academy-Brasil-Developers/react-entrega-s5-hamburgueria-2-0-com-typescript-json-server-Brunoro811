@@ -11,14 +11,6 @@ import { useHistory } from "react-router";
 
 import { useUsers } from "../../Providers/Users";
 
-interface FormLogin {
-  handleLogin: () => void;
-  handlePushCadastrar: () => void;
-  email: string;
-  password: string;
-  userData: object;
-}
-
 function FormLogin() {
   const history = useHistory();
   const [email, setEmail] = useState("");
@@ -35,7 +27,7 @@ function FormLogin() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const { authToken, singIn, logout } = useUsers();
+  const { singIn } = useUsers();
 
   const handleLogin = () => {
     const userData = {

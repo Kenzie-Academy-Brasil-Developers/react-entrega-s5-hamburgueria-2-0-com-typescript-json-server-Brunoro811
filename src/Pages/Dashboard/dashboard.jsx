@@ -4,6 +4,7 @@ import ButtonCart from "../../Components/ButtonCart"
 import CardProduto from "../../Components/CardProduto"
 import CartCardProduto from "../../Components/CartCardProduto"
 import Button from "../../Components/Button"
+import {Images} from "../../Components/Images"
 
 import search from "../../Assets/search.png"
 import logoutImg from "../../Assets/logout.png"
@@ -13,41 +14,30 @@ import x from "../../Assets/X.png"
 import {useProduct} from "../../Providers/Products"
 import {useUsers} from "../../Providers/Users"
 
-import {
-    hamburguer,
-    comboKenzie,
-    fantaGuarana,
-    bigKenzie,
-    mcFlure,
-    ovoMaltine,
-    xBurguer,
-    coca,
-  } from "../../Components/Images";
+
+import { useHistory } from "react-router"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 function Dashboard (){
-    const {products,loadProduts,addCart,cartProducts} = useProduct()
-    const [enable,setEnable] = useState(false)
+    const history = useHistory()
+    const {products,loadProduts,addCart,cartProducts,total,clearCart} = useProduct();
+    const [enable,setEnable] = useState(false);
+
     const {logout} = useUsers()
     useEffect(()=>{
         loadProduts();
     },[])
-    const images = [
-        hamburguer,
-        xBurguer,
-    comboKenzie,
-    fantaGuarana,
-    bigKenzie,
-    mcFlure,
-    ovoMaltine,
-    coca,
-    ];
+
+    
     const EnableDisable = () =>{
         setEnable(!enable)
     }
+    const handleCheckoutOrder = () =>{
+        history.push("/checkoutOrder")
+    }
     return(
         <>
-        {console.log(cartProducts)}
             <Container isBackground>
                 <Header>
                     <Logo>
@@ -55,6 +45,7 @@ function Dashboard (){
                     <span> kenzie</span>
                     </Logo>
                     <Seting>
+                    <Link to={"/orders"}>Pedidos</Link>
                         <ButtonIcon  icon={search} />
                         <ButtonCart callback={EnableDisable}  icon={cart} />
                         <ButtonIcon  callback={logout} icon={logoutImg} />
@@ -64,13 +55,13 @@ function Dashboard (){
             <Container>
                 <Main>
                     {products[0] &&
-                    products.map((element,index)=> <CardProduto key={index} img={images[index]} category={element.category} price={element.price} name={element.name} callback={addCart} />)
+                    products.map((element,index)=> <CardProduto  key={index} img={Images[element.img]} category={element.category} price={element.price} name={element.name} callback={addCart} />)
                     }
                 </Main>
             </Container>
             {enable &&
             <ContainerBlack>
-                <Modal>
+                <Modal className="slideIn">
                     <HeaderModal>
                         <p>
                         Carrinho de Compras
@@ -80,7 +71,7 @@ function Dashboard (){
                     <MainModal>
                     <Row isBorderBottom>
                         {cartProducts[0] &&
-                        cartProducts.map((element,index)=> <CartCardProduto key={index} quantity={2} index={index} name={element.name} img={images[index]}  />)
+                        cartProducts.map((element,index)=> <CartCardProduto key={index} img={Images[element.img]}  objeto={element}  quantity={element.quantity} index={index} name={element.name}   />)
                         }
                         {!cartProducts[0] &&
                             <p>Carrinho vazio!</p>
@@ -91,12 +82,11 @@ function Dashboard (){
                         <RowTotal>
                             <p>Total :</p>
                             <p>R$ 
-                            {cartProducts[0] &&
-                                cartProducts.reduce((acc,value)=>acc+(value.price*value.quantity),0).toFixed(2).replace(".",",")
-                                }
+                                {total.toFixed(2).replace(".",",")}
                             </p>
                             </RowTotal>
-                            <Button callback={()=>""} value={"Remover Todos"} />
+                            <Button callback={()=>clearCart()} value={"Remover Todos"} />
+                            <Button primary callback={handleCheckoutOrder} value={"Finalizar Pedido"} />
                         </Row>
                     }
                     </MainModal>

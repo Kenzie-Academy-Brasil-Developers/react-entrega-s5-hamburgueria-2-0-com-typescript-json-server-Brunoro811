@@ -51,6 +51,7 @@ export const Main = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 15px;
     margin-top: 20px;
     

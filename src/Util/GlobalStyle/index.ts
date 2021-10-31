@@ -44,7 +44,21 @@ body {
 .AlertDanger{
   color: var(--negative);
 }
+.slideIn{
+  animation: slidein 1s;
 
+}
+@keyframes slidein {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
 `;
  
 export default GlobalStyle;

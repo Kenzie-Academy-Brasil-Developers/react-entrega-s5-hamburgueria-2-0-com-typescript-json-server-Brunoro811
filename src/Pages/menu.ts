@@ -14,16 +14,22 @@ export const Header = styled.div`
     width: 100%;
     max-width: 1200px;
     line-height: 50px;
-    height: 60px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 `
 export const Logo = styled.h1`
-width: 100%;
+    width: 100%;
+    max-width: 400px;
     font-size: 1.6rem;
     font-weight: 600;
     color: var(--gray-600);
+    text-align: center;
+    @media (min-width:600px){
+        text-align: end;
+
+    }
     span{
         color: var(--secundary);
         font-weight: 600;
@@ -32,8 +38,14 @@ width: 100%;
     
 `
 export const Seting = styled.div`
+    width: 100%;
     max-width: 400px;
     display: flex;
+    gap: 10px;
+    justify-content: center;
+    @media (min-width:600px){
+        justify-content: flex-end;
+    }
     a{
         font-size: 1.1rem;
     font-weight: 600;

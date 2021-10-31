@@ -10,7 +10,7 @@ function ButtonIcon({ callback, param, icon }: ButtonIconsProps) {
   return (
     <>
       <Button onClick={() => callback(param)} icon={icon}>
-        <img src={icon} alt="image" />
+        <img src={icon} alt={icon} />
       </Button>
     </>
   );
