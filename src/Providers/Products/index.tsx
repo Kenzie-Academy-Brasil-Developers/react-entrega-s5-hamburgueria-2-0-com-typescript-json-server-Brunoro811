@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { baseURL } from "../BaseURL";
+import { baseURL, defaultProductsArray } from "../BaseURL";
 
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -49,6 +49,12 @@ export const ProductProvider = ({ children }: UsersProps) => {
   const [products, setProducts] = useState<ProductData[]>([]);
   const [cartProducts, setCartproducts] = useState<NewProductProps[]>([]);
   const [total, setTotal] = useState(0);
+  const Authorization = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${authToken}`,
+    },
+  };
   const countTotal = () => {
     setTotal(
       cartProducts.reduce((acc, value) => acc + value.price * value.quantity, 0)
@@ -80,6 +86,17 @@ export const ProductProvider = ({ children }: UsersProps) => {
       toast.success("Sucesso ao adicionado ao carrinho!");
     }
   };
+  const defaultPRoducts = () => {
+    defaultProductsArray.map((element, index) => {
+      console.log(element);
+      axios
+        .post(`${baseURL}/products`, element, Authorization)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((err) => console.log(err.response));
+    });
+  };
   const clearCart = () => {
     setCartproducts([]);
   };
@@ -87,6 +104,9 @@ export const ProductProvider = ({ children }: UsersProps) => {
     axios
       .get(`${baseURL}${"/products"}`)
       .then((response) => {
+        if (!response.data[0]) {
+          defaultPRoducts();
+        }
         setProducts(response.data);
       })
       .catch((err) => {

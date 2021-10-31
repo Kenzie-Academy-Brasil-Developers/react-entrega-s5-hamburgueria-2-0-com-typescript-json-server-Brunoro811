@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import axios from "axios";
 import { useHistory } from "react-router";
@@ -82,6 +88,7 @@ export const UsersProvider = ({ children }: UsersProps) => {
       .catch((err) => toast.error(err.response));
   };
   const registerNewOrder = (newOrder: RegisterOrder) => {
+    console.log(authToken);
     const { sub }: string = jwtDecode(authToken);
     const id = Number(sub);
     const body = {
@@ -103,6 +110,9 @@ export const UsersProvider = ({ children }: UsersProps) => {
     setAuthToken("");
     history.push("/");
   };
+  useEffect(() => {
+    setAuthToken(() => localStorage.getItem("@kenzie_burguer") || "");
+  }, []);
 
   return (
     <UsersContext.Provider

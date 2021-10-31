@@ -21,10 +21,9 @@ export {
 export let Images = [];
 Images['hamburguer'] = hamburguer;
 Images['xBurguer'] = xBurguer;
+Images['bigKenzie'] = bigKenzie;
 Images['comboKenzie'] = comboKenzie;
 Images['fantaGuarana'] = fantaGuarana;
-Images['bigKenzie'] = bigKenzie;
-Images['mcFlure'] = mcFlure;
-Images['comboKenzie'] = comboKenzie;
-Images['ovoMaltine'] = ovoMaltine;
 Images['coca'] = coca;
+Images['ovoMaltine'] = ovoMaltine;
+Images['mcFlure'] = mcFlure;
