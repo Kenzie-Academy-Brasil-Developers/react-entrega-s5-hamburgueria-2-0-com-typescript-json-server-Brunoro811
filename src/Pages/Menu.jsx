@@ -85,7 +85,7 @@ function Menu (){
                     </HeaderModal>
                     <MainModal>
                     <Row isBorderBottom>
-                       O App Kenzie Burguer usa uma FAKE API por isso dado um determinado tempo os dados são apagamos totalmente. Caso isso conteça os produtos seram cadastrados automaticamente (dê o reload na pagina de Cardápio) mas seu usuário será perdido e sentimos muito por isso.<br/> Por favor cadastre-se novamente! Agradecemos a compreenção.
+                       O App Kenzie Burguer usa uma FAKE API por isso dado um determinado tempo os dados são apagamos totalmente. Caso isso conteça os produtos seram cadastrados automaticamente (dê o reload nesta página) mas seu usuário será perdido e sentimos muito por isso.<br/> Por favor cadastre-se novamente! Agradecemos a compreenção.
                     </Row>
                     <Button primary callback={Notice} value={"Obrigado por me avisar!"} />
                     </MainModal>

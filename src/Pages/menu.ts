@@ -27,7 +27,7 @@ export const Logo = styled.h1`
     color: var(--gray-600);
     text-align: center;
     @media (min-width:600px){
-        text-align: end;
+        text-align: start;
 
     }
     span{

@@ -47,12 +47,12 @@ export const ProductProvider = ({ children }: UsersProps) => {
   const [products, setProducts] = useState<ProductData[]>([]);
   const [cartProducts, setCartproducts] = useState<NewProductProps[]>([]);
   const [total, setTotal] = useState(0);
-  const Authorization = {
+  /*const Authorization = {
     headers: {
       "Content-type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("@kenzie_burguer")}`,
     },
-  };
+  };*/
   const countTotal = () => {
     setTotal(
       cartProducts.reduce((acc, value) => acc + value.price * value.quantity, 0)
@@ -84,12 +84,36 @@ export const ProductProvider = ({ children }: UsersProps) => {
       toast.success("Sucesso ao adicionado ao carrinho!");
     }
   };
+  const defaultUser = () => {
+    const body = {
+      email: "kenzinho@mail.com",
+      password: "123456",
+      name: "Kenzinho",
+      age: 38,
+      id: 1,
+    };
+    axios
+      .post(`${baseURL}${"/users"}`, body)
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem("@fakeApi:token", response.data.accessToken);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+        toast.error("Erro ao tentar cadastrar default user");
+      });
+  };
   const defaultPRoducts = () => {
     defaultProductsArray.map((element, index) => {
       return axios
-        .post(`${baseURL}/products`, element, Authorization)
+        .post(`${baseURL}/products`, element, {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("@fakeApi:token")}`,
+          },
+        })
         .then((response) => {
-          ("");
+          console.log(response.data);
         })
         .catch((err) => {
           toast.error(err.response);
@@ -105,11 +129,15 @@ export const ProductProvider = ({ children }: UsersProps) => {
       .get(`${baseURL}${"/products"}`)
       .then((response) => {
         if (!response.data[0]) {
-          defaultPRoducts();
+          defaultUser();
+          setTimeout(function () {
+            defaultPRoducts();
+          }, 3000);
         }
         setProducts(response.data);
       })
       .catch((err) => {
+        console.log(err.response);
         toast.error("Erro ao carregar produtos!");
       });
   };
