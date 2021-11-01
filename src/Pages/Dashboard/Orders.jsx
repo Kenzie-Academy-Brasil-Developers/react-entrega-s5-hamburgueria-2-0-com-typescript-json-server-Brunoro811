@@ -60,6 +60,9 @@ function Orders (){
                     {orders[0] &&
                     orders.map((element,index)=> <CardOrder key={index} orderProducts={element.products} objeto={element} /> )
                     }
+                    {!orders[0] &&
+                    <p>Não há pedidos cadastrados, faça seu primeiro pedido!</p>
+                    }
                 </Main>
             </Container>
             {enable &&

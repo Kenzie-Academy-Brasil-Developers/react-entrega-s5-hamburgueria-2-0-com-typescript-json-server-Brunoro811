@@ -71,8 +71,7 @@ export const Modal = styled.div`
     max-width: 400px;
     border-radius: 3px;
     padding: 0px 0px 20px 0px;
-    margin: 0 auto;
-    margin-top: 150px;
+    margin: 10px auto;
     background-color: var(--background);
 `
 export const HeaderModal = styled.div`

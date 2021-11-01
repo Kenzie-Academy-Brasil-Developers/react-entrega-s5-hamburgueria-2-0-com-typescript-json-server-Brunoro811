@@ -42,7 +42,7 @@ function FormRegister() {
       <Title>
         Login{" "}
         <span>
-          <Link to="/"> Retornar ao Login</Link>
+          <Link to="/login"> Retornar ao Login</Link>
         </span>
       </Title>
       <form onSubmit={handleSubmit(handleRegister)}>
